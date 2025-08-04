@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetBox Django 模型关系图</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .legend {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .legend h3 {
+            margin-top: 0;
+            color: #34495e;
+        }
+        .legend-item {
+            display: inline-block;
+            margin: 5px 15px 5px 0;
+            font-size: 14px;
+        }
+        .color-box {
+            display: inline-block;
+            width: 20px;
+            height: 15px;
+            margin-right: 8px;
+            border: 1px solid #bdc3c7;
+            vertical-align: middle;
+        }
+        .dcim { background-color: #3498db; }
+        .ipam { background-color: #2ecc71; }
+        .tenancy { background-color: #e74c3c; }
+        .circuits { background-color: #f39c12; }
+        .virtualization { background-color: #9b59b6; }
+        .extras { background-color: #1abc9c; }
+        .appm { background-color: #e67e22; }
+        .core { background-color: #95a5a6; }
+        #mermaid-diagram {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NetBox Django 项目模型关系图</h1>
+        
+        <div class="legend">
+            <h3>应用模块图例</h3>
+            <div class="legend-item">
+                <span class="color-box dcim"></span>
+                <strong>DCIM</strong> - 数据中心基础设施管理
+            </div>
+            <div class="legend-item">
+                <span class="color-box ipam"></span>
+                <strong>IPAM</strong> - IP地址管理
+            </div>
+            <div class="legend-item">
+                <span class="color-box tenancy"></span>
+                <strong>Tenancy</strong> - 租户管理
+            </div>
+            <div class="legend-item">
+                <span class="color-box circuits"></span>
+                <strong>Circuits</strong> - 电路管理
+            </div>
+            <div class="legend-item">
+                <span class="color-box virtualization"></span>
+                <strong>Virtualization</strong> - 虚拟化管理
+            </div>
+            <div class="legend-item">
+                <span class="color-box extras"></span>
+                <strong>Extras</strong> - 扩展功能
+            </div>
+            <div class="legend-item">
+                <span class="color-box appm"></span>
+                <strong>APPM</strong> - 应用管理
+            </div>
+        </div>
+
+        <div id="mermaid-diagram">
+            <div class="mermaid">
+                graph TD
+                    %% DCIM 模块
+                    subgraph DCIM["DCIM - 数据中心基础设施管理"]
+                        Site["Site<br/>站点"]
+                        Region["Region<br/>区域"]
+                        SiteGroup["SiteGroup<br/>站点组"]
+                        Location["Location<br/>位置"]
+                        Rack["Rack<br/>机架"]
+                        Device["Device<br/>设备"]
+                        DeviceType["DeviceType<br/>设备类型"]
+                        Manufacturer["Manufacturer<br/>制造商"]
+                        DeviceRole["DeviceRole<br/>设备角色"]
+                        Platform["Platform<br/>平台"]
+                        Interface["Interface<br/>接口"]
+                    end
+                    
+                    %% IPAM 模块
+                    subgraph IPAM["IPAM - IP地址管理"]
+                        VRF["VRF<br/>虚拟路由转发"]
+                        IPAddress["IPAddress<br/>IP地址"]
+                        Prefix["Prefix<br/>网络前缀"]
+                        VLAN["VLAN<br/>虚拟局域网"]
+                        VLANGroup["VLANGroup<br/>VLAN组"]
+                        ASN["ASN<br/>自治系统号"]
+                        RIR["RIR<br/>区域互联网注册机构"]
+                        Aggregate["Aggregate<br/>聚合网络"]
+                    end
+                    
+                    %% Tenancy 模块
+                    subgraph Tenancy["Tenancy - 租户管理"]
+                        Tenant["Tenant<br/>租户"]
+                        TenantGroup["TenantGroup<br/>租户组"]
+                        Contact["Contact<br/>联系人"]
+                        ContactRole["ContactRole<br/>联系人角色"]
+                    end
+                    
+                    %% Circuits 模块
+                    subgraph Circuits["Circuits - 电路管理"]
+                        Provider["Provider<br/>服务提供商"]
+                        Circuit["Circuit<br/>电路"]
+                        CircuitType["CircuitType<br/>电路类型"]
+                    end
+                    
+                    %% Virtualization 模块
+                    subgraph Virtualization["Virtualization - 虚拟化管理"]
+                        Cluster["Cluster<br/>集群"]
+                        ClusterType["ClusterType<br/>集群类型"]
+                        ClusterGroup["ClusterGroup<br/>集群组"]
+                        VirtualMachine["VirtualMachine<br/>虚拟机"]
+                        VMInterface["VMInterface<br/>虚拟机接口"]
+                    end
+                    
+                    %% APPM 模块
+                    subgraph APPM["APPM - 应用管理"]
+                        Application["Application<br/>应用"]
+                        ApplicationGroup["ApplicationGroup<br/>应用组"]
+                        ApplicationPersonnel["ApplicationPersonnel<br/>应用人员"]
+                    end
+                    
+                    %% 主要关系连接
+                    Region --> Site
+                    SiteGroup --> Site
+                    Site --> Location
+                    Site --> Rack
+                    Site --> Device
+                    Location --> Rack
+                    Location --> Device
+                    Rack --> Device
+                    
+                    Manufacturer --> DeviceType
+                    DeviceType --> Device
+                    DeviceRole --> Device
+                    Platform --> Device
+                    Device --> Interface
+                    
+                    VRF --> IPAddress
+                    VRF --> Prefix
+                    VLAN --> Prefix
+                    VLANGroup --> VLAN
+                    Interface --> IPAddress
+                    VMInterface --> IPAddress
+                    
+                    RIR --> ASN
+                    RIR --> Aggregate
+                    
+                    TenantGroup --> Tenant
+                    Tenant --> Site
+                    Tenant --> Device
+                    Tenant --> IPAddress
+                    Tenant --> Prefix
+                    Tenant --> VLAN
+                    Tenant --> Circuit
+                    Tenant --> Cluster
+                    Tenant --> VirtualMachine
+                    Tenant --> Application
+                    
+                    Provider --> Circuit
+                    CircuitType --> Circuit
+                    
+                    ClusterType --> Cluster
+                    ClusterGroup --> Cluster
+                    Cluster --> VirtualMachine
+                    VirtualMachine --> VMInterface
+                    
+                    ApplicationGroup --> Application
+                    Application --> ApplicationPersonnel
+                    Contact --> ApplicationPersonnel
+                    
+                    %% 样式定义
+                    classDef dcimStyle fill:#3498db,stroke:#2980b9,stroke-width:2px,color:#fff
+                    classDef ipamStyle fill:#2ecc71,stroke:#27ae60,stroke-width:2px,color:#fff
+                    classDef tenancyStyle fill:#e74c3c,stroke:#c0392b,stroke-width:2px,color:#fff
+                    classDef circuitsStyle fill:#f39c12,stroke:#e67e22,stroke-width:2px,color:#fff
+                    classDef virtualizationStyle fill:#9b59b6,stroke:#8e44ad,stroke-width:2px,color:#fff
+                    classDef appmStyle fill:#e67e22,stroke:#d35400,stroke-width:2px,color:#fff
+                    
+                    class Site,Region,SiteGroup,Location,Rack,Device,DeviceType,Manufacturer,DeviceRole,Platform,Interface dcimStyle
+                    class VRF,IPAddress,Prefix,VLAN,VLANGroup,ASN,RIR,Aggregate ipamStyle
+                    class Tenant,TenantGroup,Contact,ContactRole tenancyStyle
+                    class Provider,Circuit,CircuitType circuitsStyle
+                    class Cluster,ClusterType,ClusterGroup,VirtualMachine,VMInterface virtualizationStyle
+                    class Application,ApplicationGroup,ApplicationPersonnel appmStyle
+            </div>
+        </div>
+        
+        <div class="description">
+            <h3>模型关系说明</h3>
+            <p>这个图表展示了NetBox Django项目中主要模型之间的关系：</p>
+            <ul>
+                <li><strong>DCIM (数据中心基础设施管理)</strong>：管理站点、机架、设备等物理基础设施</li>
+                <li><strong>IPAM (IP地址管理)</strong>：管理IP地址、前缀、VLAN等网络资源</li>
+                <li><strong>Tenancy (租户管理)</strong>：管理租户、联系人等组织结构</li>
+                <li><strong>Circuits (电路管理)</strong>：管理网络电路和服务提供商</li>
+                <li><strong>Virtualization (虚拟化管理)</strong>：管理虚拟机集群和虚拟机</li>
+                <li><strong>APPM (应用管理)</strong>：管理应用系统和相关人员</li>
+            </ul>
+            <p>箭头表示模型之间的外键关系，从父模型指向子模型。租户(Tenant)作为核心模型，与多个其他模型建立关联。</p>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>
