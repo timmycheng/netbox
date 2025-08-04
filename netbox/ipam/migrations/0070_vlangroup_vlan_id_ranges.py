@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
             name='vid_ranges',
             field=django.contrib.postgres.fields.ArrayField(
                 base_field=django.contrib.postgres.fields.ranges.IntegerRangeField(),
-                default=ipam.models.vlans.default_vid_ranges,
+                default=list,
                 size=None,
             ),
         ),
