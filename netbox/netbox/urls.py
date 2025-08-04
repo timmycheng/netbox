@@ -23,6 +23,7 @@ _patterns = [
     path('oauth/', include('social_django.urls', namespace='social')),
 
     # Apps
+    path('appm/', include('appm.urls')),
     path('circuits/', include('circuits.urls')),
     path('core/', include('core.urls')),
     path('dcim/', include('dcim.urls')),
@@ -42,6 +43,7 @@ _patterns = [
 
     # API
     path('api/', APIRootView.as_view(), name='api-root'),
+    path('api/appm/', include('appm.api.urls')),
     path('api/circuits/', include('circuits.api.urls')),
     path('api/core/', include('core.api.urls')),
     path('api/dcim/', include('dcim.api.urls')),

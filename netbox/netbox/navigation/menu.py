@@ -401,6 +401,33 @@ OPERATIONS_MENU = Menu(
     ),
 )
 
+APPM_MENU = Menu(
+    label=_('APPM'),
+    icon_class='mdi mdi-application',
+    groups=(
+        MenuGroup(
+            label=_('Applications'),
+            items=(
+                get_model_item('appm', 'applicationgroup', _('Application Groups')),
+                get_model_item('appm', 'application', _('Applications')),
+            ),
+        ),
+        MenuGroup(
+            label=_('Infrastructure'),
+            items=(
+                get_model_item('appm', 'applicationserver', _('Application Servers')),
+                get_model_item('appm', 'applicationendpoint', _('Application Endpoints')),
+            ),
+        ),
+        MenuGroup(
+            label=_('Personnel'),
+            items=(
+                get_model_item('appm', 'applicationpersonnel', _('Application Personnel')),
+            ),
+        ),
+    ),
+)
+
 ADMIN_MENU = Menu(
     label=_('Admin'),
     icon_class='mdi mdi-account-multiple',
@@ -507,6 +534,7 @@ MENUS = [
     PROVISIONING_MENU,
     CUSTOMIZATION_MENU,
     OPERATIONS_MENU,
+    APPM_MENU,
 ]
 
 # Add top-level plugin menus

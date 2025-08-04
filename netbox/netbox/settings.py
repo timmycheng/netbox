@@ -428,6 +428,7 @@ INSTALLED_APPS = [
     'timezone_field',
     'core',
     'account',
+    'appm',
     'circuits',
     'dcim',
     'ipam',
