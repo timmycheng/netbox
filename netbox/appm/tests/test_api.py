@@ -1,5 +1,4 @@
 from django.urls import reverse
-from rest_framework import status
 
 from dcim.models import Device, DeviceRole, DeviceType, Manufacturer, Site
 from ipam.models import IPAddress
@@ -262,7 +261,7 @@ class ApplicationServerTest(APIViewTestCases.APIViewTestCase):
                 'status': ServerStatusChoices.STATUS_ACTIVE,
             },
         ]
-        
+
         # Convert device object to pk for API test
         cls.create_data[2]['device'] = devices[1].pk
 

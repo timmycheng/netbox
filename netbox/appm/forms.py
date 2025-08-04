@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from netbox.forms import NetBoxModelForm, NetBoxModelImportForm, NetBoxModelBulkEditForm
-from utilities.forms.fields import CommentField, DynamicModelChoiceField, DynamicModelMultipleChoiceField, SlugField
+from utilities.forms.fields import CommentField, DynamicModelChoiceField, SlugField
 from utilities.forms.rendering import FieldSet
 from utilities.forms.utils import add_blank_choice
 from utilities.forms.widgets import BulkEditNullBooleanSelect
@@ -57,7 +57,7 @@ class ApplicationForm(TenancyForm, NetBoxModelForm):
         FieldSet('group', 'name', 'slug', 'status', 'version', name='Application'),
         FieldSet('owner', 'business_unit', 'criticality', 'environment', name='Organization'),
         FieldSet('tenant_group', 'tenant', name='Tenancy'),
-        FieldSet('description', 'comments', name='Comments'),
+        FieldSet('description', name='Details'),
     )
 
     class Meta:
@@ -95,7 +95,7 @@ class ApplicationServerForm(NetBoxModelForm):
         FieldSet('device', 'virtual_machine', name='Infrastructure'),
         FieldSet('cpu_cores', 'memory_gb', 'storage_gb', 'operating_system', name='Specifications'),
         FieldSet('middleware', name='Software'),
-        FieldSet('description', 'comments', name='Comments'),
+        FieldSet('description', name='Details'),
     )
 
     class Meta:
@@ -145,7 +145,7 @@ class ApplicationEndpointForm(NetBoxModelForm):
         FieldSet('url', 'ip_address', 'port', 'protocol', 'path', name='Network'),
         FieldSet('is_public', 'is_load_balanced', 'authentication_required', 'ssl_enabled', name='Configuration'),
         FieldSet('health_check_url', 'documentation_url', name='Monitoring'),
-        FieldSet('description', 'comments', name='Comments'),
+        FieldSet('description', name='Details'),
     )
 
     class Meta:
@@ -204,7 +204,7 @@ class ApplicationGroupImportForm(NetBoxModelImportForm):
         to_field_name='name',
         required=False
     )
-    
+
     class Meta:
         model = ApplicationGroup
         fields = ('parent', 'name', 'slug', 'description')
@@ -379,7 +379,7 @@ class ApplicationBulkEditForm(NetBoxModelBulkEditForm):
     model = Application
     fieldsets = (
         FieldSet('group', 'status', 'criticality', 'environment', 'version', 'owner', 'business_unit'),
-        FieldSet('description', 'comments', name='Comments'),
+        FieldSet('description', name='Details'),
     )
     nullable_fields = (
         'group', 'status', 'criticality', 'environment', 'version', 'owner',
@@ -422,7 +422,7 @@ class ApplicationServerBulkEditForm(NetBoxModelBulkEditForm):
     model = ApplicationServer
     fieldsets = (
         FieldSet('application', 'role', 'status', 'cpu_cores', 'memory_gb', 'storage_gb', 'operating_system'),
-        FieldSet('description', 'comments', name='Comments'),
+        FieldSet('description', name='Details'),
     )
     nullable_fields = (
         'application', 'role', 'status', 'cpu_cores', 'memory_gb', 'storage_gb',
@@ -461,7 +461,7 @@ class ApplicationEndpointBulkEditForm(NetBoxModelBulkEditForm):
     fieldsets = (
         FieldSet('application', 'type', 'status', 'protocol'),
         FieldSet('is_public', 'is_load_balanced', 'authentication_required', 'ssl_enabled', name='Configuration'),
-        FieldSet('description', 'comments', name='Comments'),
+        FieldSet('description', name='Details'),
     )
     nullable_fields = (
         'application', 'type', 'status', 'protocol', 'description', 'comments'

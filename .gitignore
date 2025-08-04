@@ -29,3 +29,7 @@ netbox.pid
 .coverage
 .vscode
 .python-version
+
+# uv
+.uv/
+uv.lock
