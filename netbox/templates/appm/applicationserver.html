@@ -1,0 +1,89 @@
+{% extends 'generic/object.html' %}
+{% load helpers %}
+{% load plugins %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <li class="breadcrumb-item"><a href="{% url 'appm:application_list' %}">Applications</a></li>
+  <li class="breadcrumb-item"><a href="{{ object.application.get_absolute_url }}">{{ object.application }}</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col col-md-6">
+		<div class="card">
+			<h5 class="card-header">Application Server</h5>
+			<div class="card-body">
+                <table class="table table-hover attr-table">
+                    <tr>
+                        <th scope="row">Name</th>
+                        <td>{{ object.name }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Application</th>
+                        <td><a href="{{ object.application.get_absolute_url }}">{{ object.application }}</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Role</th>
+                        <td>{{ object.role|placeholder }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Status</th>
+                        <td>{% badge object.get_status_display bg_color=object.get_status_color %}</td>
+                    </tr>
+                    {% if object.device %}
+                    <tr>
+                        <th scope="row">Device</th>
+                        <td><a href="{{ object.device.get_absolute_url }}">{{ object.device }}</a></td>
+                    </tr>
+                    {% endif %}
+                    {% if object.virtual_machine %}
+                    <tr>
+                        <th scope="row">Virtual Machine</th>
+                        <td><a href="{{ object.virtual_machine.get_absolute_url }}">{{ object.virtual_machine }}</a></td>
+                    </tr>
+                    {% endif %}
+                </table>
+			</div>
+		</div>
+        {% plugin_left_page object %}
+	</div>
+	<div class="col col-md-6">
+		<div class="card">
+			<h5 class="card-header">Resources</h5>
+			<div class="card-body">
+                <table class="table table-hover attr-table">
+                    <tr>
+                        <th scope="row">CPU Cores</th>
+                        <td>{{ object.cpu_cores|placeholder }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Memory (GB)</th>
+                        <td>{{ object.memory_gb|placeholder }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Storage (GB)</th>
+                        <td>{{ object.storage_gb|placeholder }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Operating System</th>
+                        <td>{{ object.operating_system|placeholder }}</td>
+                    </tr>
+                    {% if object.middleware %}
+                    <tr>
+                        <th scope="row">Middleware</th>
+                        <td>{{ object.middleware|linebreaksbr }}</td>
+                    </tr>
+                    {% endif %}
+                </table>
+			</div>
+		</div>
+        {% plugin_right_page object %}
+	</div>
+</div>
+<div class="row">
+    <div class="col col-md-12">
+        {% plugin_full_width_page object %}
+    </div>
+</div>
+{% endblock %}

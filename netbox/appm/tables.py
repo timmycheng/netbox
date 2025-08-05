@@ -1,5 +1,6 @@
 import django_tables2 as tables
 from django_tables2.utils import Accessor
+from django.utils.translation import gettext_lazy as _
 from netbox.tables import NetBoxTable, columns
 from tenancy.tables import TenancyColumnsMixin
 from .models import ApplicationGroup, Application, ApplicationServer, ApplicationEndpoint, ApplicationPersonnel
@@ -12,7 +13,7 @@ class ApplicationGroupTable(NetBoxTable):
     application_count = columns.LinkedCountColumn(
         viewname='appm:application_list',
         url_params={'group_id': 'pk'},
-        verbose_name='Applications'
+        verbose_name=_('Applications')
     )
     actions = columns.ActionsColumn()
 
@@ -38,17 +39,17 @@ class ApplicationTable(TenancyColumnsMixin, NetBoxTable):
     server_count = columns.LinkedCountColumn(
         viewname='appm:applicationserver_list',
         url_params={'application_id': 'pk'},
-        verbose_name='Servers'
+        verbose_name=_('Servers')
     )
     endpoint_count = columns.LinkedCountColumn(
         viewname='appm:applicationendpoint_list',
         url_params={'application_id': 'pk'},
-        verbose_name='Endpoints'
+        verbose_name=_('Endpoints')
     )
     personnel_count = columns.LinkedCountColumn(
         viewname='appm:applicationpersonnel_list',
         url_params={'application_id': 'pk'},
-        verbose_name='Personnel'
+        verbose_name=_('Personnel')
     )
     actions = columns.ActionsColumn()
 
@@ -82,18 +83,18 @@ class ApplicationServerTable(NetBoxTable):
     role = columns.ChoiceFieldColumn()
     status = columns.ChoiceFieldColumn()
     cpu_cores = tables.Column(
-        verbose_name='CPU Cores'
+        verbose_name=_('CPU Cores')
     )
     memory_gb = tables.Column(
-        verbose_name='Memory (GB)'
+        verbose_name=_('Memory (GB)')
     )
     storage_gb = tables.Column(
-        verbose_name='Storage (GB)'
+        verbose_name=_('Storage (GB)')
     )
     endpoint_count = columns.LinkedCountColumn(
         viewname='appm:applicationendpoint_list',
         url_params={'server_id': 'pk'},
-        verbose_name='Endpoints'
+        verbose_name=_('Endpoints')
     )
     actions = columns.ActionsColumn()
 
@@ -124,24 +125,24 @@ class ApplicationEndpointTable(NetBoxTable):
     type = columns.ChoiceFieldColumn()
     status = columns.ChoiceFieldColumn()
     url = tables.URLColumn(
-        verbose_name='URL'
+        verbose_name=_('URL')
     )
     ip_address = tables.Column(
-        verbose_name='IP Address'
+        verbose_name=_('IP Address')
     )
     port = tables.Column()
     protocol = tables.Column()
     is_public = columns.BooleanColumn(
-        verbose_name='Public'
+        verbose_name=_('Public')
     )
     is_load_balanced = columns.BooleanColumn(
-        verbose_name='Load Balanced'
+        verbose_name=_('Load Balanced')
     )
     ssl_enabled = columns.BooleanColumn(
-        verbose_name='SSL'
+        verbose_name=_('SSL')
     )
     authentication_required = columns.BooleanColumn(
-        verbose_name='Auth Required'
+        verbose_name=_('Auth Required')
     )
     actions = columns.ActionsColumn()
 
@@ -176,10 +177,10 @@ class ApplicationPersonnelTable(NetBoxTable):
     department = tables.Column()
     title = tables.Column()
     is_primary = columns.BooleanColumn(
-        verbose_name='Primary'
+        verbose_name=_('Primary')
     )
     is_emergency_contact = columns.BooleanColumn(
-        verbose_name='Emergency Contact'
+        verbose_name=_('Emergency Contact')
     )
     start_date = tables.DateColumn()
     end_date = tables.DateColumn()

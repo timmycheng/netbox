@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from utilities.choices import ChoiceSet
 
 
@@ -15,11 +16,11 @@ class ApplicationStatusChoices(ChoiceSet):
     STATUS_DECOMMISSIONING = 'decommissioning'
 
     CHOICES = [
-        (STATUS_ACTIVE, 'Active'),
-        (STATUS_PLANNED, 'Planned'),
-        (STATUS_STAGING, 'Staging'),
-        (STATUS_RETIRED, 'Retired'),
-        (STATUS_DECOMMISSIONING, 'Decommissioning'),
+        (STATUS_ACTIVE, _('Active')),
+        (STATUS_PLANNED, _('Planned')),
+        (STATUS_STAGING, _('Staging')),
+        (STATUS_RETIRED, _('Retired')),
+        (STATUS_DECOMMISSIONING, _('Decommissioning')),
     ]
 
 
@@ -32,10 +33,10 @@ class ApplicationCriticalityChoices(ChoiceSet):
     CRITICAL = 'critical'
 
     CHOICES = [
-        (LOW, 'Low'),
-        (MEDIUM, 'Medium'),
-        (HIGH, 'High'),
-        (CRITICAL, 'Critical'),
+        (LOW, _('Low')),
+        (MEDIUM, _('Medium')),
+        (HIGH, _('High')),
+        (CRITICAL, _('Critical')),
     ]
 
 
@@ -49,11 +50,11 @@ class ApplicationEnvironmentChoices(ChoiceSet):
     DISASTER_RECOVERY = 'disaster_recovery'
 
     CHOICES = [
-        (DEVELOPMENT, 'Development'),
-        (TESTING, 'Testing'),
-        (STAGING, 'Staging'),
-        (PRODUCTION, 'Production'),
-        (DISASTER_RECOVERY, 'Disaster Recovery'),
+        (DEVELOPMENT, _('Development')),
+        (TESTING, _('Testing')),
+        (STAGING, _('Staging')),
+        (PRODUCTION, _('Production')),
+        (DISASTER_RECOVERY, _('Disaster Recovery')),
     ]
 
 
@@ -71,11 +72,11 @@ class ServerStatusChoices(ChoiceSet):
     STATUS_FAILED = 'failed'
 
     CHOICES = [
-        (STATUS_ACTIVE, 'Active'),
-        (STATUS_PLANNED, 'Planned'),
-        (STATUS_OFFLINE, 'Offline'),
-        (STATUS_DECOMMISSIONING, 'Decommissioning'),
-        (STATUS_FAILED, 'Failed'),
+        (STATUS_ACTIVE, _('Active')),
+        (STATUS_PLANNED, _('Planned')),
+        (STATUS_OFFLINE, _('Offline')),
+        (STATUS_DECOMMISSIONING, _('Decommissioning')),
+        (STATUS_FAILED, _('Failed')),
     ]
 
 
@@ -93,15 +94,15 @@ class ServerRoleChoices(ChoiceSet):
     OTHER = 'other'
 
     CHOICES = [
-        (WEB_SERVER, 'Web Server'),
-        (APPLICATION_SERVER, 'Application Server'),
-        (DATABASE_SERVER, 'Database Server'),
-        (CACHE_SERVER, 'Cache Server'),
-        (LOAD_BALANCER, 'Load Balancer'),
-        (FILE_SERVER, 'File Server'),
-        (BACKUP_SERVER, 'Backup Server'),
-        (MONITORING_SERVER, 'Monitoring Server'),
-        (OTHER, 'Other'),
+        (WEB_SERVER, _('Web Server')),
+        (APPLICATION_SERVER, _('Application Server')),
+        (DATABASE_SERVER, _('Database Server')),
+        (CACHE_SERVER, _('Cache Server')),
+        (LOAD_BALANCER, _('Load Balancer')),
+        (FILE_SERVER, _('File Server')),
+        (BACKUP_SERVER, _('Backup Server')),
+        (MONITORING_SERVER, _('Monitoring Server')),
+        (OTHER, _('Other')),
     ]
 
 
@@ -119,11 +120,11 @@ class EndpointStatusChoices(ChoiceSet):
     STATUS_DISABLED = 'disabled'
 
     CHOICES = [
-        (STATUS_ACTIVE, 'Active'),
-        (STATUS_PLANNED, 'Planned'),
-        (STATUS_MAINTENANCE, 'Maintenance'),
-        (STATUS_DEPRECATED, 'Deprecated'),
-        (STATUS_DISABLED, 'Disabled'),
+        (STATUS_ACTIVE, _('Active')),
+        (STATUS_PLANNED, _('Planned')),
+        (STATUS_MAINTENANCE, _('Maintenance')),
+        (STATUS_DEPRECATED, _('Deprecated')),
+        (STATUS_DISABLED, _('Disabled')),
     ]
 
 
@@ -139,13 +140,13 @@ class EndpointTypeChoices(ChoiceSet):
     OTHER = 'other'
 
     CHOICES = [
-        (WEB_UI, 'Web UI'),
-        (API, 'API'),
-        (WEB_SERVICE, 'Web Service'),
-        (DATABASE, 'Database'),
-        (FTP, 'FTP'),
-        (SSH, 'SSH'),
-        (OTHER, 'Other'),
+        (WEB_UI, _('Web UI')),
+        (API, _('API')),
+        (WEB_SERVICE, _('Web Service')),
+        (DATABASE, _('Database')),
+        (FTP, _('FTP')),
+        (SSH, _('SSH')),
+        (OTHER, _('Other')),
     ]
 
 
@@ -168,14 +169,14 @@ class PersonnelRoleChoices(ChoiceSet):
     OTHER = 'other'
 
     CHOICES = [
-        (OWNER, 'Owner'),
-        (DEVELOPER, 'Developer'),
-        (ADMINISTRATOR, 'Administrator'),
-        (OPERATOR, 'Operator'),
-        (BUSINESS_ANALYST, 'Business Analyst'),
-        (PROJECT_MANAGER, 'Project Manager'),
-        (ARCHITECT, 'Architect'),
-        (TESTER, 'Tester'),
-        (SUPPORT, 'Support'),
-        (OTHER, 'Other'),
+        (OWNER, _('Owner')),
+        (DEVELOPER, _('Developer')),
+        (ADMINISTRATOR, _('Administrator')),
+        (OPERATOR, _('Operator')),
+        (BUSINESS_ANALYST, _('Business Analyst')),
+        (PROJECT_MANAGER, _('Project Manager')),
+        (ARCHITECT, _('Architect')),
+        (TESTER, _('Tester')),
+        (SUPPORT, _('Support')),
+        (OTHER, _('Other')),
     ]

@@ -1,0 +1,109 @@
+{% extends 'generic/object.html' %}
+{% load helpers %}
+{% load plugins %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <li class="breadcrumb-item"><a href="{% url 'appm:application_list' %}">Applications</a></li>
+  <li class="breadcrumb-item"><a href="{{ object.application.get_absolute_url }}">{{ object.application }}</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col col-md-6">
+		<div class="card">
+			<h5 class="card-header">Application Personnel</h5>
+			<div class="card-body">
+                <table class="table table-hover attr-table">
+                    <tr>
+                        <th scope="row">Name</th>
+                        <td>{{ object.name }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Application</th>
+                        <td><a href="{{ object.application.get_absolute_url }}">{{ object.application }}</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Role</th>
+                        <td>{% badge object.get_role_display %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Title</th>
+                        <td>{{ object.title|placeholder }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Department</th>
+                        <td>{{ object.department|placeholder }}</td>
+                    </tr>
+                    {% if object.contact %}
+                    <tr>
+                        <th scope="row">Contact</th>
+                        <td><a href="{{ object.contact.get_absolute_url }}">{{ object.contact }}</a></td>
+                    </tr>
+                    {% endif %}
+                </table>
+			</div>
+		</div>
+        {% plugin_left_page object %}
+	</div>
+	<div class="col col-md-6">
+		<div class="card">
+			<h5 class="card-header">Contact Information</h5>
+			<div class="card-body">
+                <table class="table table-hover attr-table">
+                    {% if object.email %}
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td><a href="mailto:{{ object.email }}">{{ object.email }}</a></td>
+                    </tr>
+                    {% endif %}
+                    {% if object.phone %}
+                    <tr>
+                        <th scope="row">Phone</th>
+                        <td><a href="tel:{{ object.phone }}">{{ object.phone }}</a></td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <th scope="row">Primary Contact</th>
+                        <td>{% checkmark object.is_primary %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Emergency Contact</th>
+                        <td>{% checkmark object.is_emergency_contact %}</td>
+                    </tr>
+                    {% if object.start_date %}
+                    <tr>
+                        <th scope="row">Start Date</th>
+                        <td>{{ object.start_date }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if object.end_date %}
+                    <tr>
+                        <th scope="row">End Date</th>
+                        <td>{{ object.end_date }}</td>
+                    </tr>
+                    {% endif %}
+                </table>
+			</div>
+		</div>
+        {% plugin_right_page object %}
+	</div>
+</div>
+{% if object.notes %}
+<div class="row">
+	<div class="col col-md-12">
+		<div class="card">
+			<h5 class="card-header">Notes</h5>
+			<div class="card-body">
+                {{ object.notes|linebreaksbr }}
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+<div class="row">
+    <div class="col col-md-12">
+        {% plugin_full_width_page object %}
+    </div>
+</div>
+{% endblock %}

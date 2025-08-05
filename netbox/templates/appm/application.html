@@ -9,10 +9,10 @@
 
 {% block content %}
 <div class="row">
-    <div class="col col-md-6">
-        <div class="card">
-            <h5 class="card-header">Application</h5>
-            <div class="card-body">
+	<div class="col col-md-6">
+		<div class="card">
+			<h5 class="card-header">Application</h5>
+			<div class="card-body">
                 <table class="table table-hover attr-table">
                     <tr>
                         <th scope="row">Name</th>
@@ -30,7 +30,11 @@
                     {% endif %}
                     <tr>
                         <th scope="row">Status</th>
-                        <td>{% badge object.get_status_display object.get_status_color %}</td>
+                        <td>{% badge object.get_status_display bg_color=object.get_status_color %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Environment</th>
+                        <td>{% badge object.get_environment_display %}</td>
                     </tr>
                     {% if object.version %}
                     <tr>
@@ -38,6 +42,28 @@
                         <td>{{ object.version }}</td>
                     </tr>
                     {% endif %}
+                    {% if object.criticality %}
+                    <tr>
+                        <th scope="row">Criticality</th>
+                        <td>{% badge object.get_criticality_display %}</td>
+                    </tr>
+                    {% endif %}
+                    {% if object.tenant %}
+                    <tr>
+                        <th scope="row">Tenant</th>
+                        <td><a href="{{ object.tenant.get_absolute_url }}">{{ object.tenant }}</a></td>
+                    </tr>
+                    {% endif %}
+                </table>
+			</div>
+		</div>
+        {% plugin_left_page object %}
+	</div>
+	<div class="col col-md-6">
+		<div class="card">
+			<h5 class="card-header">Management</h5>
+			<div class="card-body">
+                <table class="table table-hover attr-table">
                     {% if object.owner %}
                     <tr>
                         <th scope="row">Owner</th>
@@ -50,38 +76,6 @@
                         <td>{{ object.business_unit }}</td>
                     </tr>
                     {% endif %}
-                    {% if object.criticality %}
-                    <tr>
-                        <th scope="row">Criticality</th>
-                        <td>{% badge object.get_criticality_display object.get_criticality_color %}</td>
-                    </tr>
-                    {% endif %}
-                    <tr>
-                        <th scope="row">Environment</th>
-                        <td>{% badge object.get_environment_display object.get_environment_color %}</td>
-                    </tr>
-                    {% if object.tenant %}
-                    <tr>
-                        <th scope="row">Tenant</th>
-                        <td><a href="{{ object.tenant.get_absolute_url }}">{{ object.tenant }}</a></td>
-                    </tr>
-                    {% endif %}
-                    {% if object.description %}
-                    <tr>
-                        <th scope="row">Description</th>
-                        <td>{{ object.description }}</td>
-                    </tr>
-                    {% endif %}
-                </table>
-            </div>
-        </div>
-        {% plugin_left_page object %}
-    </div>
-    <div class="col col-md-6">
-        <div class="card">
-            <h5 class="card-header">Statistics</h5>
-            <div class="card-body">
-                <table class="table table-hover attr-table">
                     <tr>
                         <th scope="row">Servers</th>
                         <td><a href="{% url 'appm:applicationserver_list' %}?application_id={{ object.pk }}">{{ object.servers.count }}</a></td>
@@ -94,11 +88,17 @@
                         <th scope="row">Personnel</th>
                         <td><a href="{% url 'appm:applicationpersonnel_list' %}?application_id={{ object.pk }}">{{ object.personnel.count }}</a></td>
                     </tr>
+                    {% if object.description %}
+                    <tr>
+                        <th scope="row">Description</th>
+                        <td>{{ object.description }}</td>
+                    </tr>
+                    {% endif %}
                 </table>
-            </div>
-        </div>
+			</div>
+		</div>
         {% plugin_right_page object %}
-    </div>
+	</div>
 </div>
 {% if object.comments %}
 <div class="row">

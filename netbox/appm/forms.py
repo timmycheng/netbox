@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from netbox.forms import NetBoxModelForm, NetBoxModelImportForm, NetBoxModelBulkEditForm
 from utilities.forms.fields import CommentField, DynamicModelChoiceField, SlugField
 from utilities.forms.rendering import FieldSet
@@ -19,13 +20,14 @@ from .choices import (
 
 class ApplicationGroupForm(NetBoxModelForm):
     parent = DynamicModelChoiceField(
+        label=_('Parent'),
         queryset=ApplicationGroup.objects.all(),
         required=False
     )
     slug = SlugField()
 
     fieldsets = (
-        FieldSet('parent', 'name', 'slug', 'description', name='Application Group'),
+        FieldSet('parent', 'name', 'slug', 'description', name=_('Application Group')),
     )
 
     class Meta:
@@ -35,29 +37,33 @@ class ApplicationGroupForm(NetBoxModelForm):
 
 class ApplicationForm(TenancyForm, NetBoxModelForm):
     group = DynamicModelChoiceField(
+        label=_('Group'),
         queryset=ApplicationGroup.objects.all(),
         required=False
     )
     slug = SlugField()
     status = forms.ChoiceField(
+        label=_('Status'),
         choices=add_blank_choice(ApplicationStatusChoices),
         required=False
     )
     criticality = forms.ChoiceField(
+        label=_('Criticality'),
         choices=add_blank_choice(ApplicationCriticalityChoices),
         required=False
     )
     environment = forms.ChoiceField(
+        label=_('Environment'),
         choices=add_blank_choice(ApplicationEnvironmentChoices),
         required=False
     )
     comments = CommentField()
 
     fieldsets = (
-        FieldSet('group', 'name', 'slug', 'status', 'version', name='Application'),
-        FieldSet('owner', 'business_unit', 'criticality', 'environment', name='Organization'),
-        FieldSet('tenant_group', 'tenant', name='Tenancy'),
-        FieldSet('description', name='Details'),
+        FieldSet('group', 'name', 'slug', 'status', 'version', name=_('Application')),
+        FieldSet('owner', 'business_unit', 'criticality', 'environment', name=_('Organization')),
+        FieldSet('tenant_group', 'tenant', name=_('Tenancy')),
+        FieldSet('description', name=_('Details')),
     )
 
     class Meta:
@@ -70,32 +76,37 @@ class ApplicationForm(TenancyForm, NetBoxModelForm):
 
 class ApplicationServerForm(NetBoxModelForm):
     application = DynamicModelChoiceField(
+        label=_('Application'),
         queryset=Application.objects.all()
     )
     device = DynamicModelChoiceField(
+        label=_('Device'),
         queryset=Device.objects.all(),
         required=False
     )
     virtual_machine = DynamicModelChoiceField(
+        label=_('Virtual Machine'),
         queryset=VirtualMachine.objects.all(),
         required=False
     )
     role = forms.ChoiceField(
+        label=_('Role'),
         choices=add_blank_choice(ServerRoleChoices),
         required=False
     )
     status = forms.ChoiceField(
+        label=_('Status'),
         choices=add_blank_choice(ServerStatusChoices),
         required=False
     )
     comments = CommentField()
 
     fieldsets = (
-        FieldSet('application', 'name', 'role', 'status', name='Server'),
-        FieldSet('device', 'virtual_machine', name='Infrastructure'),
-        FieldSet('cpu_cores', 'memory_gb', 'storage_gb', 'operating_system', name='Specifications'),
-        FieldSet('middleware', name='Software'),
-        FieldSet('description', name='Details'),
+        FieldSet('application', 'name', 'role', 'status', name=_('Server')),
+        FieldSet('device', 'virtual_machine', name=_('Infrastructure')),
+        FieldSet('cpu_cores', 'memory_gb', 'storage_gb', 'operating_system', name=_('Specifications')),
+        FieldSet('middleware', name=_('Software')),
+        FieldSet('description', name=_('Details')),
     )
 
     class Meta:
@@ -121,9 +132,11 @@ class ApplicationServerForm(NetBoxModelForm):
 
 class ApplicationEndpointForm(NetBoxModelForm):
     application = DynamicModelChoiceField(
+        label=_('Application'),
         queryset=Application.objects.all()
     )
     server = DynamicModelChoiceField(
+        label=_('Server'),
         queryset=ApplicationServer.objects.all(),
         required=False,
         query_params={
@@ -131,21 +144,23 @@ class ApplicationEndpointForm(NetBoxModelForm):
         }
     )
     type = forms.ChoiceField(
+        label=_('Type'),
         choices=add_blank_choice(EndpointTypeChoices),
         required=False
     )
     status = forms.ChoiceField(
+        label=_('Status'),
         choices=add_blank_choice(EndpointStatusChoices),
         required=False
     )
     comments = CommentField()
 
     fieldsets = (
-        FieldSet('application', 'server', 'name', 'type', 'status', name='Endpoint'),
-        FieldSet('url', 'ip_address', 'port', 'protocol', 'path', name='Network'),
-        FieldSet('is_public', 'is_load_balanced', 'authentication_required', 'ssl_enabled', name='Configuration'),
-        FieldSet('health_check_url', 'documentation_url', name='Monitoring'),
-        FieldSet('description', name='Details'),
+        FieldSet('application', 'server', 'name', 'type', 'status', name=_('Endpoint')),
+        FieldSet('url', 'ip_address', 'port', 'protocol', 'path', name=_('Network')),
+        FieldSet('is_public', 'is_load_balanced', 'authentication_required', 'ssl_enabled', name=_('Configuration')),
+        FieldSet('health_check_url', 'documentation_url', name=_('Monitoring')),
+        FieldSet('description', name=_('Details')),
     )
 
     class Meta:
@@ -160,22 +175,25 @@ class ApplicationEndpointForm(NetBoxModelForm):
 
 class ApplicationPersonnelForm(NetBoxModelForm):
     application = DynamicModelChoiceField(
+        label=_('Application'),
         queryset=Application.objects.all()
     )
     contact = DynamicModelChoiceField(
+        label=_('Contact'),
         queryset=Contact.objects.all(),
         required=False
     )
     role = forms.ChoiceField(
+        label=_('Role'),
         choices=add_blank_choice(PersonnelRoleChoices),
         required=False
     )
 
     fieldsets = (
-        FieldSet('application', 'contact', 'name', 'role', name='Personnel'),
-        FieldSet('email', 'phone', 'department', 'title', name='Contact Information'),
-        FieldSet('is_primary', 'is_emergency_contact', 'start_date', 'end_date', name='Status'),
-        FieldSet('notes', name='Notes'),
+        FieldSet('application', 'contact', 'name', 'role', name=_('Personnel')),
+        FieldSet('email', 'phone', 'department', 'title', name=_('Contact Information')),
+        FieldSet('is_primary', 'is_emergency_contact', 'start_date', 'end_date', name=_('Status')),
+        FieldSet('notes', name=_('Notes')),
     )
 
     class Meta:
@@ -192,7 +210,7 @@ class ApplicationPersonnelForm(NetBoxModelForm):
         end_date = cleaned_data.get('end_date')
 
         if start_date and end_date and end_date < start_date:
-            raise ValidationError('End date cannot be earlier than start date.')
+            raise ValidationError(_('End date cannot be earlier than start date.'))
 
         return cleaned_data
 
@@ -200,6 +218,7 @@ class ApplicationPersonnelForm(NetBoxModelForm):
 # Import Forms
 class ApplicationGroupImportForm(NetBoxModelImportForm):
     parent = forms.ModelChoiceField(
+        label=_('Parent'),
         queryset=ApplicationGroup.objects.all(),
         to_field_name='name',
         required=False
@@ -212,19 +231,23 @@ class ApplicationGroupImportForm(NetBoxModelImportForm):
 
 class ApplicationImportForm(NetBoxModelImportForm):
     group = forms.ModelChoiceField(
+        label=_('Group'),
         queryset=ApplicationGroup.objects.all(),
         to_field_name='name',
         required=False
     )
     status = forms.ChoiceField(
+        label=_('Status'),
         choices=add_blank_choice(ApplicationStatusChoices),
         required=False
     )
     criticality = forms.ChoiceField(
+        label=_('Criticality'),
         choices=add_blank_choice(ApplicationCriticalityChoices),
         required=False
     )
     environment = forms.ChoiceField(
+        label=_('Environment'),
         choices=add_blank_choice(ApplicationEnvironmentChoices),
         required=False
     )
@@ -239,24 +262,29 @@ class ApplicationImportForm(NetBoxModelImportForm):
 
 class ApplicationServerImportForm(NetBoxModelImportForm):
     application = forms.ModelChoiceField(
+        label=_('Application'),
         queryset=Application.objects.all(),
         to_field_name='name'
     )
     device = forms.ModelChoiceField(
+        label=_('Device'),
         queryset=Device.objects.all(),
         to_field_name='name',
         required=False
     )
     virtual_machine = forms.ModelChoiceField(
+        label=_('Virtual Machine'),
         queryset=VirtualMachine.objects.all(),
         to_field_name='name',
         required=False
     )
     role = forms.ChoiceField(
+        label=_('Role'),
         choices=add_blank_choice(ServerRoleChoices),
         required=False
     )
     status = forms.ChoiceField(
+        label=_('Status'),
         choices=add_blank_choice(ServerStatusChoices),
         required=False
     )
@@ -272,19 +300,23 @@ class ApplicationServerImportForm(NetBoxModelImportForm):
 
 class ApplicationEndpointImportForm(NetBoxModelImportForm):
     application = forms.ModelChoiceField(
+        label=_('Application'),
         queryset=Application.objects.all(),
         to_field_name='name'
     )
     server = forms.ModelChoiceField(
+        label=_('Server'),
         queryset=ApplicationServer.objects.all(),
         to_field_name='name',
         required=False
     )
     type = forms.ChoiceField(
+        label=_('Type'),
         choices=add_blank_choice(EndpointTypeChoices),
         required=False
     )
     status = forms.ChoiceField(
+        label=_('Status'),
         choices=add_blank_choice(EndpointStatusChoices),
         required=False
     )
@@ -301,15 +333,18 @@ class ApplicationEndpointImportForm(NetBoxModelImportForm):
 
 class ApplicationPersonnelImportForm(NetBoxModelImportForm):
     application = forms.ModelChoiceField(
+        label=_('Application'),
         queryset=Application.objects.all(),
         to_field_name='name'
     )
     contact = forms.ModelChoiceField(
+        label=_('Contact'),
         queryset=Contact.objects.all(),
         to_field_name='name',
         required=False
     )
     role = forms.ChoiceField(
+        label=_('Role'),
         choices=add_blank_choice(PersonnelRoleChoices),
         required=False
     )
@@ -326,10 +361,12 @@ class ApplicationPersonnelImportForm(NetBoxModelImportForm):
 # Bulk Edit Forms
 class ApplicationGroupBulkEditForm(NetBoxModelBulkEditForm):
     parent = DynamicModelChoiceField(
+        label=_('Parent'),
         queryset=ApplicationGroup.objects.all(),
         required=False
     )
     description = forms.CharField(
+        label=_('Description'),
         max_length=200,
         required=False
     )
@@ -343,34 +380,42 @@ class ApplicationGroupBulkEditForm(NetBoxModelBulkEditForm):
 
 class ApplicationBulkEditForm(NetBoxModelBulkEditForm):
     group = DynamicModelChoiceField(
+        label=_('Group'),
         queryset=ApplicationGroup.objects.all(),
         required=False
     )
     status = forms.ChoiceField(
+        label=_('Status'),
         choices=add_blank_choice(ApplicationStatusChoices),
         required=False
     )
     criticality = forms.ChoiceField(
+        label=_('Criticality'),
         choices=add_blank_choice(ApplicationCriticalityChoices),
         required=False
     )
     environment = forms.ChoiceField(
+        label=_('Environment'),
         choices=add_blank_choice(ApplicationEnvironmentChoices),
         required=False
     )
     version = forms.CharField(
+        label=_('Version'),
         max_length=50,
         required=False
     )
     owner = forms.CharField(
+        label=_('Owner'),
         max_length=100,
         required=False
     )
     business_unit = forms.CharField(
+        label=_('Business Unit'),
         max_length=100,
         required=False
     )
     description = forms.CharField(
+        label=_('Description'),
         max_length=200,
         required=False
     )
@@ -379,7 +424,7 @@ class ApplicationBulkEditForm(NetBoxModelBulkEditForm):
     model = Application
     fieldsets = (
         FieldSet('group', 'status', 'criticality', 'environment', 'version', 'owner', 'business_unit'),
-        FieldSet('description', name='Details'),
+        FieldSet('description', name=_('Details')),
     )
     nullable_fields = (
         'group', 'status', 'criticality', 'environment', 'version', 'owner',
@@ -389,31 +434,39 @@ class ApplicationBulkEditForm(NetBoxModelBulkEditForm):
 
 class ApplicationServerBulkEditForm(NetBoxModelBulkEditForm):
     application = DynamicModelChoiceField(
+        label=_('Application'),
         queryset=Application.objects.all(),
         required=False
     )
     role = forms.ChoiceField(
+        label=_('Role'),
         choices=add_blank_choice(ServerRoleChoices),
         required=False
     )
     status = forms.ChoiceField(
+        label=_('Status'),
         choices=add_blank_choice(ServerStatusChoices),
         required=False
     )
     cpu_cores = forms.IntegerField(
+        label=_('CPU Cores'),
         required=False
     )
     memory_gb = forms.IntegerField(
+        label=_('Memory (GB)'),
         required=False
     )
     storage_gb = forms.IntegerField(
+        label=_('Storage (GB)'),
         required=False
     )
     operating_system = forms.CharField(
+        label=_('Operating System'),
         max_length=100,
         required=False
     )
     description = forms.CharField(
+        label=_('Description'),
         max_length=200,
         required=False
     )
@@ -422,7 +475,7 @@ class ApplicationServerBulkEditForm(NetBoxModelBulkEditForm):
     model = ApplicationServer
     fieldsets = (
         FieldSet('application', 'role', 'status', 'cpu_cores', 'memory_gb', 'storage_gb', 'operating_system'),
-        FieldSet('description', name='Details'),
+        FieldSet('description', name=_('Details')),
     )
     nullable_fields = (
         'application', 'role', 'status', 'cpu_cores', 'memory_gb', 'storage_gb',
@@ -432,18 +485,22 @@ class ApplicationServerBulkEditForm(NetBoxModelBulkEditForm):
 
 class ApplicationEndpointBulkEditForm(NetBoxModelBulkEditForm):
     application = DynamicModelChoiceField(
+        label=_('Application'),
         queryset=Application.objects.all(),
         required=False
     )
     type = forms.ChoiceField(
+        label=_('Type'),
         choices=add_blank_choice(EndpointTypeChoices),
         required=False
     )
     status = forms.ChoiceField(
+        label=_('Status'),
         choices=add_blank_choice(EndpointStatusChoices),
         required=False
     )
     protocol = forms.CharField(
+        label=_('Protocol'),
         max_length=20,
         required=False
     )
@@ -452,6 +509,7 @@ class ApplicationEndpointBulkEditForm(NetBoxModelBulkEditForm):
     authentication_required = BulkEditNullBooleanSelect()
     ssl_enabled = BulkEditNullBooleanSelect()
     description = forms.CharField(
+        label=_('Description'),
         max_length=200,
         required=False
     )
@@ -460,8 +518,8 @@ class ApplicationEndpointBulkEditForm(NetBoxModelBulkEditForm):
     model = ApplicationEndpoint
     fieldsets = (
         FieldSet('application', 'type', 'status', 'protocol'),
-        FieldSet('is_public', 'is_load_balanced', 'authentication_required', 'ssl_enabled', name='Configuration'),
-        FieldSet('description', name='Details'),
+        FieldSet('is_public', 'is_load_balanced', 'authentication_required', 'ssl_enabled', name=_('Configuration')),
+        FieldSet('description', name=_('Details')),
     )
     nullable_fields = (
         'application', 'type', 'status', 'protocol', 'description', 'comments'
@@ -470,18 +528,22 @@ class ApplicationEndpointBulkEditForm(NetBoxModelBulkEditForm):
 
 class ApplicationPersonnelBulkEditForm(NetBoxModelBulkEditForm):
     application = DynamicModelChoiceField(
+        label=_('Application'),
         queryset=Application.objects.all(),
         required=False
     )
     role = forms.ChoiceField(
+        label=_('Role'),
         choices=add_blank_choice(PersonnelRoleChoices),
         required=False
     )
     department = forms.CharField(
+        label=_('Department'),
         max_length=100,
         required=False
     )
     title = forms.CharField(
+        label=_('Title'),
         max_length=100,
         required=False
     )
@@ -491,6 +553,6 @@ class ApplicationPersonnelBulkEditForm(NetBoxModelBulkEditForm):
     model = ApplicationPersonnel
     fieldsets = (
         FieldSet('application', 'role', 'department', 'title'),
-        FieldSet('is_primary', 'is_emergency_contact', name='Status'),
+        FieldSet('is_primary', 'is_emergency_contact', name=_('Status')),
     )
     nullable_fields = ('application', 'role', 'department', 'title')
